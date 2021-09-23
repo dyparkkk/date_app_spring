@@ -13,7 +13,6 @@ import org.springframework.test.web.servlet.MockMvc;
 class UserControllerTest {
 
     @Autowired UsersService usersService;
-    @Autowired private MockMvc mvc;
 
     @Test
     void showMembers() {

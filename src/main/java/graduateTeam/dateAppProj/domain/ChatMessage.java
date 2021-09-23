@@ -19,11 +19,6 @@ public class ChatMessage {
     @Id @GeneratedValue
     private Long id;
 
-    public enum MessageType {
-        TALK, ENTER
-    }
-    private MessageType type;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chatroom_id")
     private UUID roomId;
