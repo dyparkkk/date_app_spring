@@ -1,7 +1,6 @@
 package graduateTeam.dateAppProj.service.user;
 
 import graduateTeam.dateAppProj.domain.Member;
-import graduateTeam.dateAppProj.domain.MemberJpaRepository;
 import graduateTeam.dateAppProj.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
