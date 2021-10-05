@@ -28,7 +28,6 @@ class ChatServiceTest {
 
     @Test
     @Transactional
-    @Rollback(value = false)
     void createMC() {
         //given
         Member member = new Member();

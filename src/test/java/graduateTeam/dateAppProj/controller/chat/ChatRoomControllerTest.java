@@ -40,7 +40,6 @@ class ChatRoomControllerTest {
 
     @Test
     @Transactional
-    @Rollback(value = false)
     void 채팅룸생성() throws Exception{
         //given
         Member member = new Member();
@@ -63,8 +62,8 @@ class ChatRoomControllerTest {
 
         //when
 //        ResponseEntity<String> responseEntity = restTemplate.postForEntity(url, dto, String.class);
-////
-//        //then
+//
+        //then
 //        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
 //        assertThat(responseEntity.getBody()).isGreaterThan("");
 //

@@ -22,7 +22,6 @@ class MemberRepositoryTest {
 
     @Test
     @Transactional
-    @Rollback(value = false)
     void testMember() {
         //given
         Member member = new Member();
@@ -38,7 +37,6 @@ class MemberRepositoryTest {
 
     @Test
     @Transactional
-    @Rollback(value = false)
     void test_findByUserId() {
         String userId = "user1";
 
