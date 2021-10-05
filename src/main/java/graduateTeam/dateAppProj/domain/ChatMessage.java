@@ -3,38 +3,43 @@ package graduateTeam.dateAppProj.domain;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
-import org.springframework.data.annotation.Id;
 
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Entity
 @Getter @Setter
 public class ChatMessage {
 
     @Id @GeneratedValue
+    @Column(name = "chat_message_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "chatroom_id")
-    private UUID roomId;
+    private ChatRoom chatroom;
 
-    private String sender;
+    private String senderId;
+
+    private String senderName;
 
     private String message;
 
     private LocalDateTime time;
 
     //== builder ==//
-    @Builder
-    public ChatMessage(UUID roomId, String sender, String message, LocalDateTime time) {
-        this.roomId = roomId;
-        this.sender = sender;
+    private ChatMessage(ChatRoom chatroom, String senderId, String senderName, String message) {
+        this.chatroom = chatroom;
+        this.senderId = senderId;
+        this.senderName = senderName;
         this.message = message;
-        this.time = time;
+        this.time = LocalDateTime.now();
+    }
+
+    public static ChatMessage createChatMessage(ChatRoom chatRoom,  String senderId, String senderName, String message){
+        ChatMessage chatMessage = new ChatMessage(chatRoom, senderId, senderName, message);
+        chatRoom.addChatMessage(chatMessage);
+        return chatMessage;
     }
 }

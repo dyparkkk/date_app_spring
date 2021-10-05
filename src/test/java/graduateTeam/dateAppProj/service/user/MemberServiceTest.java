@@ -2,21 +2,26 @@ package graduateTeam.dateAppProj.service.user;
 
 
 import graduateTeam.dateAppProj.domain.Member;
-import org.junit.jupiter.api.BeforeEach;
+import graduateTeam.dateAppProj.repository.MemberRepository;
+import graduateTeam.dateAppProj.service.MemberService;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-public class UsersServiceTest {
+public class MemberServiceTest {
 
     @Autowired
-    UsersService usersService;
+    MemberService memberService;
+    @Autowired
+    MemberRepository memberRepository;
 
 
     @Test
@@ -37,5 +42,18 @@ public class UsersServiceTest {
 //        System.out.println("findallmember = " + findallmember);
     }
 
+    @Test
+    @Transactional
+    void saveTest(){
+        Member member = new Member();
+        member.setUserId("1234");
+        member.setUsername("user1");
+
+        memberService.save(member);
+
+        List<Member> findMember = memberRepository.findByUserId("1234");
+
+        Assertions.assertThat(findMember.get(0).getUserId()).isEqualTo("1234");
+    }
 
 }

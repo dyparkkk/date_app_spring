@@ -63,6 +63,7 @@
                     } else {
                         var params = new URLSearchParams();
                         params.append("name",this.room_name);
+
                         axios.post('/chat/createRoom', params)
                         .then(
                             response => {

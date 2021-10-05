@@ -22,8 +22,4 @@ public class Member {
     private String userId;
     private String userPwd;
 
-    private String selfIntro;
-
-    private String profileUrl;
-
 }

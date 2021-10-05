@@ -2,7 +2,8 @@ package graduateTeam.dateAppProj.controller.chat;
 
 import graduateTeam.dateAppProj.controller.dto.ChatRoomResponseDto;
 
-import graduateTeam.dateAppProj.service.chat.ChatService;
+import graduateTeam.dateAppProj.controller.dto.RequestCreateChatRoomDto;
+import graduateTeam.dateAppProj.service.ChatService;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.web.bind.annotation.*;
@@ -18,21 +19,24 @@ public class ChatRoomController {
     private final ChatService chatService;
 
     @GetMapping("/rooms")
-    public List<ChatRoomResponseDto> chatrooms() {
+    public List<ChatRoomResponseDto> chatRooms() {
        return chatService.findAll();
     }
 
     @PostMapping("/createRoom")
-    public ChatRoomResponseDto createChatRoom(@RequestParam String name) {
-        String chatRoomId = chatService.createChatRoom(name);
-        return chatService.findById(chatRoomId);
+    public String createChatRoom(@RequestBody RequestCreateChatRoomDto dto) {
+        return chatService.createChatRoom(dto);
     }
 
     @GetMapping("/room/{roomId}")
     @ResponseBody
-    public ChatRoomResponseDto roomInfo(@PathVariable String roomId) {
-        return chatService.findById(roomId);
+    public ChatRoomResponseDto roomInfo(@PathVariable String roomId,
+                                        @RequestParam String userId) {
+        return chatService.enterChatRoom(roomId, userId);
     }
-
-    // ======== test controller ========= //
+    /**
+     * 추가 사항 :
+     *      이미 memberChatRoom이 있다면?
+     *      chatRoom 안의 chatMessage 로딩
+     */
 }

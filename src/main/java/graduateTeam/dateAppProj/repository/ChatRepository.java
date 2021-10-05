@@ -1,6 +1,8 @@
 package graduateTeam.dateAppProj.repository;
 
+import graduateTeam.dateAppProj.domain.ChatMessage;
 import graduateTeam.dateAppProj.domain.ChatRoom;
+import graduateTeam.dateAppProj.domain.MemberChatRoom;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -14,8 +16,14 @@ public class ChatRepository {
     @PersistenceContext
     private EntityManager em;
 
-    public void save(ChatRoom chatroom) {
+    public void saveChatroom(ChatRoom chatroom) {
         em.persist(chatroom);
+    }
+    public void saveChatMessage(ChatMessage chatMessage){
+        em.persist(chatMessage);
+    }
+    public void saveMemberChatRoom(MemberChatRoom memberChatRoom) {
+        em.persist(memberChatRoom);
     }
 
     public ChatRoom findById(UUID id) {
@@ -26,4 +34,11 @@ public class ChatRepository {
         return em.createQuery("select c from ChatRoom c", ChatRoom.class)
                 .getResultList();
     }
+
+    public List<MemberChatRoom> findMCAll(){
+        return em.createQuery("select mc from MemberChatRoom mc", MemberChatRoom.class)
+                .getResultList();
+    }
+
+
 }

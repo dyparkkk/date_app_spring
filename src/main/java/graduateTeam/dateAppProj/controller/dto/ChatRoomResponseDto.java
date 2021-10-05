@@ -11,10 +11,12 @@ import java.util.List;
 public class ChatRoomResponseDto {
     private String roomId;
     private String name;
+    private String message;
 
     public ChatRoomResponseDto(ChatRoom chatRoom) {
         this.roomId = chatRoom.getId().toString();
         this.name = chatRoom.getName();
+        this.message = name + "방에 입장하셨습니다. ";
     }
 
 }

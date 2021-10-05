@@ -11,6 +11,8 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 class MemberRepositoryTest {
@@ -32,6 +34,25 @@ class MemberRepositoryTest {
 
         //then
         Assertions.assertThat(findMember).isEqualTo(member);
+    }
+
+    @Test
+    @Transactional
+    @Rollback(value = false)
+    void test_findByUserId() {
+        String userId = "user1";
+
+        Member member = new Member();
+        member.setUsername("member1");
+        member.setUserId(userId);
+
+        //when
+        memberRepository.save(member);
+        List<Member> findMember = memberRepository.findByUserId(userId);
+
+        //then
+        Assertions.assertThat(findMember.get(0).getId()).isEqualTo(member.getId());
+
     }
 
 }
