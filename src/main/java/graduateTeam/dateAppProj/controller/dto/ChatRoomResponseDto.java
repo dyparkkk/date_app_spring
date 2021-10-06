@@ -1,5 +1,6 @@
 package graduateTeam.dateAppProj.controller.dto;
 
+import graduateTeam.dateAppProj.domain.Category;
 import graduateTeam.dateAppProj.domain.ChatRoom;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,12 +12,17 @@ import java.util.List;
 public class ChatRoomResponseDto {
     private String roomId;
     private String name;
-    private String message;
+    private double latitude;
+    private double longitude;
+    private Category category;
+
 
     public ChatRoomResponseDto(ChatRoom chatRoom) {
         this.roomId = chatRoom.getId().toString();
         this.name = chatRoom.getName();
-        this.message = name + "방에 입장하셨습니다. ";
+        this.latitude = chatRoom.getLatitude();
+        this.longitude = chatRoom.getLongitude();
+        this.category = chatRoom.getCategory();
     }
 
 }

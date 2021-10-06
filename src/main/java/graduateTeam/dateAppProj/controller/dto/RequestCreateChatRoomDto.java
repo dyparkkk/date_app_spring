@@ -9,8 +9,8 @@ import lombok.Setter;
 @Getter @Setter
 @NoArgsConstructor
 public class RequestCreateChatRoomDto {
-    private String name;
-    private String  userId;
+    private String name; // 방제목
+    private String  userId; // login_ID
     private double latitude;
     private double longitude;
     private Category category;
