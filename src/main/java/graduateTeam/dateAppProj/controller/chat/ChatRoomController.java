@@ -1,5 +1,6 @@
 package graduateTeam.dateAppProj.controller.chat;
 
+import graduateTeam.dateAppProj.controller.dto.ChatRoomIdResponseDto;
 import graduateTeam.dateAppProj.controller.dto.ChatRoomResponseDto;
 
 import graduateTeam.dateAppProj.controller.dto.RequestCreateChatRoomDto;
@@ -24,8 +25,8 @@ public class ChatRoomController {
     }
 
     @PostMapping("/createRoom")
-    public String createChatRoom(@RequestBody RequestCreateChatRoomDto dto) {
-        return chatService.createChatRoom(dto);
+    public ChatRoomIdResponseDto createChatRoom(@RequestBody RequestCreateChatRoomDto dto) {
+        return new ChatRoomIdResponseDto(chatService.createChatRoom(dto));
     }
 
     @GetMapping("/room/{roomId}")
