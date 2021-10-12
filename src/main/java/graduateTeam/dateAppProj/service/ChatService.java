@@ -30,7 +30,10 @@ public class ChatService {
     public String createChatRoom(RequestCreateChatRoomDto dto) {
 
         Member member = memberRepository.findByUserId(dto.getUserId())
-                .orElseThrow(() -> new IllegalArgumentException("userId를 찾을 수 없습니다."));
+                .orElseThrow(() -> {
+                    log.warn("createChatRoom : findByUserId");
+                    throw  new IllegalArgumentException("userId를 찾을 수 없습니다.");
+                });
         MemberChatRoom memberChatRoom = MemberChatRoom.createMemberChatRoom(member);
         chatRepository.saveMemberChatRoom(memberChatRoom);
 
@@ -53,7 +56,10 @@ public class ChatService {
     @Transactional
     public ChatRoomResponseDto enterChatRoom(String roomId, String userId) {
         Member member = memberRepository.findByUserId(userId)
-                .orElseThrow(() -> new IllegalArgumentException("userId를 찾을수 없습니다. "));
+                .orElseThrow(() -> {
+                    log.warn("enterChatRoom : findByUserId");
+                    throw  new IllegalArgumentException("userId를 찾을수 없습니다. ");
+                });
         MemberChatRoom memberChatRoom = MemberChatRoom.createMemberChatRoom(member);
         chatRepository.saveMemberChatRoom(memberChatRoom);
 
@@ -66,7 +72,11 @@ public class ChatService {
     public Long sendMessage(ChatMessageDto dto){
 
         Member member = memberRepository.findByUserId(dto.getSenderId())
-                .orElseThrow(() -> new IllegalArgumentException("userId를 찾을수 없습니다. "));
+                .orElseThrow(() -> {
+                    log.warn("sendMessage : findByUserId");
+                    throw new IllegalArgumentException("userId를 찾을수 없습니다. ");
+                });
+
         ChatRoom chatRoom = chatRepository.findById(UUID.fromString(dto.getRoomId()));
 
         ChatMessage chatMessage = ChatMessage.createChatMessage(chatRoom, dto.getSenderId(), member.getUsername(), dto.getMessage());
