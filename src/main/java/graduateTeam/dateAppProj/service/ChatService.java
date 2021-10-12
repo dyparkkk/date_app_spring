@@ -29,8 +29,8 @@ public class ChatService {
     @Transactional
     public String createChatRoom(RequestCreateChatRoomDto dto) {
 
-        List<Member> memberList = memberRepository.findByUserId(dto.getUserId());
-        MemberChatRoom memberChatRoom = MemberChatRoom.createMemberChatRoom(memberList.get(0));
+        Member member = memberRepository.findByUserId(dto.getUserId()).orElseThrow(NullPointerException::new);
+        MemberChatRoom memberChatRoom = MemberChatRoom.createMemberChatRoom(member);
         chatRepository.saveMemberChatRoom(memberChatRoom);
 
         ChatRoom chatRoom = ChatRoom.createChatRoom(dto, memberChatRoom);
@@ -51,8 +51,8 @@ public class ChatService {
 
     @Transactional
     public ChatRoomResponseDto enterChatRoom(String roomId, String userId) {
-        List<Member> memberList = memberRepository.findByUserId(userId);
-        MemberChatRoom memberChatRoom = MemberChatRoom.createMemberChatRoom(memberList.get(0));
+        Member member = memberRepository.findByUserId(userId).orElseThrow(NullPointerException::new);
+        MemberChatRoom memberChatRoom = MemberChatRoom.createMemberChatRoom(member);
         chatRepository.saveMemberChatRoom(memberChatRoom);
 
         ChatRoom chatRoom = chatRepository.findById(UUID.fromString(roomId));
@@ -62,8 +62,8 @@ public class ChatService {
 
     @Transactional
     public Long sendMessage(ChatMessageDto dto){
-        List<Member> memberList = memberRepository.findByUserId(dto.getSenderId());
-        Member member = memberList.get(0);
+
+        Member member = memberRepository.findByUserId(dto.getSenderId()).orElseThrow(NullPointerException::new); //////
         ChatRoom chatRoom = chatRepository.findById(UUID.fromString(dto.getRoomId()));
 
         ChatMessage chatMessage = ChatMessage.createChatMessage(chatRoom, dto.getSenderId(), member.getUsername(), dto.getMessage());

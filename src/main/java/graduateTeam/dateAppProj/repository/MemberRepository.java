@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Repository
 public class MemberRepository {
@@ -23,10 +24,11 @@ public class MemberRepository {
         return em.find(Member.class, id);
     }
 
-    public List<Member> findByUserId(String userId) {
-        return em.createQuery("select m from Member m where m.userId = :userId", Member.class)
+    public Optional<Member> findByUserId(String userId) {
+        return Optional.ofNullable(
+                em.createQuery("select m from Member m where m.userId = :userId", Member.class)
                 .setParameter("userId", userId)
-                .getResultList();
+                .getResultList().stream().findFirst().orElse(null));
     }
 
     public List<Member> findAll() {

@@ -4,6 +4,7 @@ import graduateTeam.dateAppProj.controller.dto.ChatRoomIdResponseDto;
 import graduateTeam.dateAppProj.controller.dto.ChatRoomResponseDto;
 
 import graduateTeam.dateAppProj.controller.dto.RequestCreateChatRoomDto;
+import graduateTeam.dateAppProj.domain.Category;
 import graduateTeam.dateAppProj.service.ChatService;
 import lombok.RequiredArgsConstructor;
 
@@ -21,7 +22,7 @@ public class ChatRoomController {
 
     @GetMapping("/rooms")
     public List<ChatRoomResponseDto> chatRooms() {
-       return chatService.findAll();
+        return chatService.findAll();
     }
 
     @PostMapping("/createRoom")
@@ -40,4 +41,11 @@ public class ChatRoomController {
      *      이미 memberChatRoom이 있다면?
      *      chatRoom 안의 chatMessage 로딩
      */
+
+//    @GetMapping("/search")
+//    public List<ChatRoomResponseDto> searchChatRoom (@RequestParam String word,
+//                                                     @RequestParam Category category) {
+//
+//
+//    }
 }

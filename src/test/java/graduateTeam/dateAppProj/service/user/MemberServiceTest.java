@@ -42,18 +42,6 @@ public class MemberServiceTest {
 //        System.out.println("findallmember = " + findallmember);
     }
 
-    @Test
-    @Transactional
-    void saveTest(){
-        Member member = new Member();
-        member.setUserId("1234");
-        member.setUsername("user1");
-
-        memberService.save(member);
-
-        List<Member> findMember = memberRepository.findByUserId("1234");
-
-        Assertions.assertThat(findMember.get(0).getUserId()).isEqualTo("1234");
-    }
+    
 
 }

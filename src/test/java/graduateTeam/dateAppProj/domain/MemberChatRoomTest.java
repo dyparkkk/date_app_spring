@@ -25,9 +25,7 @@ class MemberChatRoomTest {
     @Transactional
     void MC_생성() {
         //given
-        Member member = new Member();
-        member.setUsername("user1");
-        member.setUserId("ididid");
+        Member member = new Member("name", "user11", "pwd");
         memberRepository.save(member);
 
         //when

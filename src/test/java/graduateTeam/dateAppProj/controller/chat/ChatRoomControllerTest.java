@@ -42,9 +42,7 @@ class ChatRoomControllerTest {
     @Transactional
     void 채팅룸생성() throws Exception{
         //given
-        Member member = new Member();
-        member.setUserId("user11");
-        member.setUsername("user1");
+        Member member = new Member("name", "user11", "pwd");
         memberRepository.save(member);
 
         RequestCreateChatRoomDto dto = new RequestCreateChatRoomDto();

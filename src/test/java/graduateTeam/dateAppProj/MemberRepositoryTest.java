@@ -22,34 +22,18 @@ class MemberRepositoryTest {
 
     @Test
     @Transactional
-    void testMember() {
-        //given
-        Member member = new Member();
-        member.setUsername("member1");
-
-        //when
-        Long savedId = memberRepository.save(member);
-        Member findMember = memberRepository.findOne(savedId);
-
-        //then
-        Assertions.assertThat(findMember).isEqualTo(member);
-    }
-
-    @Test
-    @Transactional
     void test_findByUserId() {
         String userId = "user1";
 
-        Member member = new Member();
-        member.setUsername("member1");
-        member.setUserId(userId);
+        Member member = new Member("testName", userId, "pwd");
+
 
         //when
         memberRepository.save(member);
-        List<Member> findMember = memberRepository.findByUserId(userId);
+        Member findMember = memberRepository.findByUserId(userId).get();
 
         //then
-        Assertions.assertThat(findMember.get(0).getId()).isEqualTo(member.getId());
+        Assertions.assertThat(findMember.getId()).isEqualTo(member.getId());
 
     }
 

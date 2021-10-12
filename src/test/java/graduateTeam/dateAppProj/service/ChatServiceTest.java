@@ -22,33 +22,34 @@ class ChatServiceTest {
 
     @Autowired
     MemberService memberService;
-    @Autowired ChatService chatService;
+    @Autowired
+    ChatService chatService;
     @Autowired
     ChatRepository chatRepository;
 
-    @Test
-    @Transactional
-    void createMC() {
-        //given
-        Member member = new Member();
-        member.setUserId("1234");
-        member.setUsername("user1");
-        memberService.save(member);
-
-        RequestCreateChatRoomDto dto = new RequestCreateChatRoomDto();
-        dto.setName("채팅방");
-        dto.setUserId(member.getUserId());
-        dto.setLatitude(123.123);
-        dto.setLongitude(321.321);
-        dto.setCategory(Category.date);
-
-        dto.toString();
-
-        chatService.createChatRoom(dto);
-
-        List<MemberChatRoom> mcAll = chatRepository.findMCAll();
-
-        Assertions.assertThat(mcAll.get(0).getMember().getUserId()).isEqualTo("1234");
-        Assertions.assertThat(mcAll.get(0).getMember().getId()).isEqualTo(member.getId());
-    }
+//    @Test
+//    @Transactional
+//    void createMC() {
+//        //given
+//        Member member = new Member();
+//        member.setUserId("1234");
+//        member.setUsername("user1");
+//        memberService.save(member);
+//
+//        RequestCreateChatRoomDto dto = new RequestCreateChatRoomDto();
+//        dto.setName("채팅방");
+//        dto.setUserId(member.getUserId());
+//        dto.setLatitude(123.123);
+//        dto.setLongitude(321.321);
+//        dto.setCategory(Category.date);
+//
+//        dto.toString();
+//
+//        chatService.createChatRoom(dto);
+//
+//        List<MemberChatRoom> mcAll = chatRepository.findMCAll();
+//
+//        Assertions.assertThat(mcAll.get(0).getMember().getUserId()).isEqualTo("1234");
+//        Assertions.assertThat(mcAll.get(0).getMember().getId()).isEqualTo(member.getId());
+//}
 }
