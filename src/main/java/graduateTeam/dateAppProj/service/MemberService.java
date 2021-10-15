@@ -35,13 +35,13 @@ public class MemberService {
         return memberRepository.save(member);
     }
 
-    public Long login(LoginInfoDto dto, HttpServletRequest req) {
-        checkLogin(dto.getUserId(), dto.getUserPwd());
+    public UserInfoDto login(LoginInfoDto dto, HttpServletRequest req) {
+        Member member = checkLogin(dto.getUserId(), dto.getUserPwd());
 
         HttpSession session = req.getSession();
-        session.setAttribute("user", dto.getUserId());
+        session.setAttribute("user", member);
 
-        return 1L;
+        return new UserInfoDto(member.getUsername(), member.getUserId(), null);
     }
 
     public List<Member> findAll(){
@@ -58,13 +58,15 @@ public class MemberService {
         });
     }
 
-    private void checkLogin(String userId, String userPwd) {
+    private Member checkLogin(String userId, String userPwd) {
         Member findMember = memberRepository.findByUserId(userId)
                 .orElseThrow(() -> new IllegalArgumentException("아이디가 존재하지 않습니다. "));
 
         if (!passwordEncoder.matches(userPwd, findMember.getUserPwd())) {
             throw new IllegalArgumentException("비밀번호가 다릅니다. ");
         }
+
+        return findMember;
     }
 
 }
