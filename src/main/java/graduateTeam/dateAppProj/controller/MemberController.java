@@ -1,5 +1,6 @@
 package graduateTeam.dateAppProj.controller;
 
+import graduateTeam.dateAppProj.controller.dto.IsLoginDto;
 import graduateTeam.dateAppProj.controller.dto.LoginInfoDto;
 import graduateTeam.dateAppProj.controller.dto.UserInfoDto;
 import graduateTeam.dateAppProj.domain.Member;
@@ -38,16 +39,31 @@ public class MemberController {
         return memberService.login(dto, req);
     }
 
+//    @GetMapping("/hi")
+//    public String hi(@SessionAttribute(name = "user", required = false) Member loginMember,
+//                     Model model){
+//        if(loginMember != null){
+//            model.addAttribute("userId", loginMember.getUserId());
+//        } else{
+//            model.addAttribute("userId", "guest");
+//        }
+//
+//
+//        return "index";
+//    }
+
     @GetMapping("/hi")
-    public String hi(@SessionAttribute(name = "user", required = false) Member loginMember,
-                     Model model){
-        if(loginMember != null){
-            model.addAttribute("userId", loginMember.getUserId());
-        } else{
-            model.addAttribute("userId", "guest");
+    @ResponseBody
+    public IsLoginDto isLogin(@SessionAttribute(name = "user", required = false) Member loginMember) {
+        String message;
+        IsLoginDto dto = new IsLoginDto();
+        if(loginMember == null) message = "error : not login";
+        else {
+            message = "login success";
+            dto.setUserId(loginMember.getUserId());
+            dto.setUserName(loginMember.getUsername());
         }
-
-
-        return "index";
+        dto.setMessage(message);
+        return dto;
     }
 }
