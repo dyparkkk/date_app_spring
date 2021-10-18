@@ -1,6 +1,6 @@
 package graduateTeam.dateAppProj.domain;
 
-import graduateTeam.dateAppProj.controller.dto.RequestCreateChatRoomDto;
+import graduateTeam.dateAppProj.controller.chat.dto.RequestCreateChatRoomDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

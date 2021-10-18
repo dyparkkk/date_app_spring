@@ -40,7 +40,6 @@ public class MemberService {
 
         HttpSession session = req.getSession();
         session.setAttribute("user", member);
-
         return new UserInfoDto(member.getUsername(), member.getUserId(), null);
     }
 

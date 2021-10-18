@@ -1,4 +1,4 @@
-package graduateTeam.dateAppProj.controller.dto;
+package graduateTeam.dateAppProj.controller.chat.dto;
 
 import graduateTeam.dateAppProj.domain.ChatMessage;
 import graduateTeam.dateAppProj.domain.ChatRoom;
@@ -12,15 +12,14 @@ import java.util.UUID;
 
 @Getter @Setter
 @NoArgsConstructor
-public class ChatMessageDto {
+public class ChatMessageRequestDto {
 
     private String roomId;
     private String senderId;
     private String message;
-    private LocalDateTime time;
 
     @Builder
-    public ChatMessageDto(String roomId, String senderId, String message) {
+    public ChatMessageRequestDto(String roomId, String senderId, String message) {
         this.roomId = roomId;
         this.senderId = senderId;
         this.message = message;
@@ -33,4 +32,13 @@ public class ChatMessageDto {
 //                .message(message)
 //                .build();
 //    }
+
+    public ChatMessageResponseDto toResponseDto(String name){
+        return ChatMessageResponseDto.builder()
+                .senderName(name)
+                .message(message)
+                .senderId(senderId)
+                .roomId(roomId)
+                .build();
+    }
 }

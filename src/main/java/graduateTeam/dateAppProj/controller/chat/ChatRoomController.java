@@ -1,10 +1,9 @@
 package graduateTeam.dateAppProj.controller.chat;
 
-import graduateTeam.dateAppProj.controller.dto.ChatRoomIdResponseDto;
-import graduateTeam.dateAppProj.controller.dto.ChatRoomResponseDto;
+import graduateTeam.dateAppProj.controller.chat.dto.ChatRoomIdResponseDto;
+import graduateTeam.dateAppProj.controller.chat.dto.ChatRoomResponseDto;
 
-import graduateTeam.dateAppProj.controller.dto.RequestCreateChatRoomDto;
-import graduateTeam.dateAppProj.domain.Category;
+import graduateTeam.dateAppProj.controller.chat.dto.RequestCreateChatRoomDto;
 import graduateTeam.dateAppProj.service.ChatService;
 import lombok.RequiredArgsConstructor;
 

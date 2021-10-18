@@ -1,8 +1,9 @@
 package graduateTeam.dateAppProj.service;
 
-import graduateTeam.dateAppProj.controller.dto.ChatMessageDto;
-import graduateTeam.dateAppProj.controller.dto.ChatRoomResponseDto;
-import graduateTeam.dateAppProj.controller.dto.RequestCreateChatRoomDto;
+import graduateTeam.dateAppProj.controller.chat.dto.ChatMessageRequestDto;
+import graduateTeam.dateAppProj.controller.chat.dto.ChatMessageResponseDto;
+import graduateTeam.dateAppProj.controller.chat.dto.ChatRoomResponseDto;
+import graduateTeam.dateAppProj.controller.chat.dto.RequestCreateChatRoomDto;
 import graduateTeam.dateAppProj.domain.ChatMessage;
 import graduateTeam.dateAppProj.domain.ChatRoom;
 import graduateTeam.dateAppProj.domain.Member;
@@ -14,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.NoResultException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -69,7 +69,7 @@ public class ChatService {
     }
 
     @Transactional
-    public Long sendMessage(ChatMessageDto dto){
+    public ChatMessageResponseDto sendMessage(ChatMessageRequestDto dto){
 
         Member member = memberRepository.findByUserId(dto.getSenderId())
                 .orElseThrow(() -> {
@@ -81,7 +81,8 @@ public class ChatService {
 
         ChatMessage chatMessage = ChatMessage.createChatMessage(chatRoom, dto.getSenderId(), member.getUsername(), dto.getMessage());
         chatRepository.saveChatMessage(chatMessage);
-        return chatMessage.getId();
+
+        return dto.toResponseDto(member.getUsername());
     }
 
 }

@@ -1,10 +1,8 @@
 package graduateTeam.dateAppProj.controller.chat;
 
-import graduateTeam.dateAppProj.controller.dto.RequestCreateChatRoomDto;
+import graduateTeam.dateAppProj.controller.chat.dto.RequestCreateChatRoomDto;
 import graduateTeam.dateAppProj.domain.Category;
-import graduateTeam.dateAppProj.domain.ChatRoom;
 import graduateTeam.dateAppProj.domain.Member;
-import graduateTeam.dateAppProj.domain.MemberChatRoom;
 import graduateTeam.dateAppProj.repository.ChatRepository;
 import graduateTeam.dateAppProj.repository.MemberRepository;
 import graduateTeam.dateAppProj.service.ChatService;
@@ -15,13 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

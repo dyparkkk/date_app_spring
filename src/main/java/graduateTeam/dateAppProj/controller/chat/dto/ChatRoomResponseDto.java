@@ -1,4 +1,4 @@
-package graduateTeam.dateAppProj.controller.dto;
+package graduateTeam.dateAppProj.controller.chat.dto;
 
 import graduateTeam.dateAppProj.domain.Category;
 import graduateTeam.dateAppProj.domain.ChatRoom;

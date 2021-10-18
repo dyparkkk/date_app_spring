@@ -1,7 +1,7 @@
 package graduateTeam.dateAppProj.controller.chat;
 
-import graduateTeam.dateAppProj.controller.dto.ChatMessageDto;
-import graduateTeam.dateAppProj.domain.ChatMessage;
+import graduateTeam.dateAppProj.controller.chat.dto.ChatMessageRequestDto;
+import graduateTeam.dateAppProj.controller.chat.dto.ChatMessageResponseDto;
 import graduateTeam.dateAppProj.service.ChatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -16,8 +16,8 @@ public class ChatController {
     private final ChatService chatService;
 
     @MessageMapping("/chat/message") //  /pub/chat/message
-    public void message(ChatMessageDto messageDto) {
-        chatService.sendMessage(messageDto);
-        messagingTemplate.convertAndSend("/sub/chat/room/"+ messageDto.getRoomId(), messageDto);
+    public void message(ChatMessageRequestDto messageDto) {
+        ChatMessageResponseDto responseDto = chatService.sendMessage(messageDto);
+        messagingTemplate.convertAndSend("/sub/chat/room/"+ responseDto.getRoomId(), responseDto);
     }                           //    /sub/chat/room/roomId
 }
