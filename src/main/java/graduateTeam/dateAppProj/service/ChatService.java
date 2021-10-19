@@ -60,11 +60,14 @@ public class ChatService {
                     log.warn("enterChatRoom : findByUserId");
                     throw  new IllegalArgumentException("userId를 찾을수 없습니다. ");
                 });
-        MemberChatRoom memberChatRoom = MemberChatRoom.createMemberChatRoom(member);
-        chatRepository.saveMemberChatRoom(memberChatRoom);
-
         ChatRoom chatRoom = chatRepository.findById(UUID.fromString(roomId));
-        chatRoom.addMemberChatRoom(memberChatRoom);
+
+        if(chatRepository.findMemberChatRoom(member, chatRoom).isPresent() == false){
+            MemberChatRoom memberChatRoom = MemberChatRoom.createMemberChatRoom(member);
+            chatRepository.saveMemberChatRoom(memberChatRoom);
+            chatRoom.addMemberChatRoom(memberChatRoom);
+        }
+
         return new ChatRoomResponseDto(chatRoom);
     }
 
@@ -83,6 +86,29 @@ public class ChatService {
         chatRepository.saveChatMessage(chatMessage);
 
         return dto.toResponseDto(member.getUsername());
+    }
+
+    @Transactional
+    public Long leaveChatRoom(String roomId, String userId){
+        Member member = memberRepository.findByUserId(userId)
+                .orElseThrow(() -> {
+                    log.warn("enterChatRoom : findByUserId");
+                    throw  new IllegalArgumentException("userId를 찾을수 없습니다. ");
+                });
+        ChatRoom chatRoom = chatRepository.findById(UUID.fromString(roomId));
+
+        MemberChatRoom memberChatRoom = chatRepository.findMemberChatRoom(member, chatRoom)
+                .orElseThrow(() -> {
+                    log.warn("leaveChatRoom : findMemberChatRoom");
+                    throw new IllegalArgumentException("memberChatRoom을 찾을수 없습니다. ");
+                });
+        chatRoom.removeMemberChatRoom(memberChatRoom);
+        chatRepository.removeMemberChatRoom(memberChatRoom);
+
+        if(chatRoom.getUserNumber() == 0){
+            chatRepository.removeChatRoom(chatRoom);
+        }
+        return 1L;
     }
 
 }

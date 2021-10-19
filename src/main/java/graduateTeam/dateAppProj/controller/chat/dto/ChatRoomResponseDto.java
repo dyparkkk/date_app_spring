@@ -15,6 +15,7 @@ public class ChatRoomResponseDto {
     private double latitude;
     private double longitude;
     private Category category;
+    private int userNumber;
 
 
     public ChatRoomResponseDto(ChatRoom chatRoom) {
@@ -23,6 +24,7 @@ public class ChatRoomResponseDto {
         this.latitude = chatRoom.getLatitude();
         this.longitude = chatRoom.getLongitude();
         this.category = chatRoom.getCategory();
+        this.userNumber = chatRoom.getUserNumber();
     }
 
 }

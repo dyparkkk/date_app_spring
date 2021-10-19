@@ -23,8 +23,9 @@ public class ChatRoom {
     private UUID id;
 
     private String name;
+    private int userNumber;
 
-    @OneToMany(mappedBy = "chatroom")
+    @OneToMany(mappedBy = "chatroom", cascade = {CascadeType.REMOVE})
     private List<ChatMessage> messages = new ArrayList<>();
 
     @OneToMany(mappedBy = "chatRoom")
@@ -45,12 +46,19 @@ public class ChatRoom {
         this.category = category;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.userNumber = 0;
     }
 
     //== 연관관계 메서드==//
     public void addMemberChatRoom(MemberChatRoom memberChatRoom){
         memberChatRooms.add(memberChatRoom);
         memberChatRoom.addChatRoom(this);
+        userNumber += 1;
+    }
+
+    public void removeMemberChatRoom(MemberChatRoom memberChatRoom) {
+        memberChatRooms.remove(memberChatRoom);
+        userNumber -= 1;
     }
 
     public void addChatMessage(ChatMessage chatMessage) {

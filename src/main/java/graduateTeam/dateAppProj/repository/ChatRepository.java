@@ -2,12 +2,14 @@ package graduateTeam.dateAppProj.repository;
 
 import graduateTeam.dateAppProj.domain.ChatMessage;
 import graduateTeam.dateAppProj.domain.ChatRoom;
+import graduateTeam.dateAppProj.domain.Member;
 import graduateTeam.dateAppProj.domain.MemberChatRoom;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -40,5 +42,22 @@ public class ChatRepository {
                 .getResultList();
     }
 
+    public Optional<MemberChatRoom> findMemberChatRoom(Member member, ChatRoom chatRoom) {
+        return Optional.ofNullable(
+                em.createQuery("select mc from MemberChatRoom mc" +
+                        " where mc.member = :member" +
+                                " and mc.chatRoom = :chatRoom", MemberChatRoom.class)
+                        .setParameter("member", member)
+                        .setParameter("chatRoom", chatRoom)
+                        .getResultList().stream().findFirst().orElse(null));
+    }
+
+    public void removeMemberChatRoom(MemberChatRoom mc) {
+        em.remove(mc);
+    }
+
+    public void removeChatRoom(ChatRoom chatRoom){
+        em.remove(chatRoom);
+    }
 
 }

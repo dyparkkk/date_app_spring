@@ -31,7 +31,7 @@ public class ChatRoomController {
 
     @GetMapping("/room/{roomId}")
     @ResponseBody
-    public ChatRoomResponseDto roomInfo(@PathVariable String roomId,
+    public ChatRoomResponseDto enterChatRoom(@PathVariable String roomId,
                                         @RequestParam String userId) {
         return chatService.enterChatRoom(roomId, userId);
     }
@@ -47,4 +47,10 @@ public class ChatRoomController {
 //
 //
 //    }
+
+    @GetMapping("/leaveRoom/{roomId}")
+    public Long leaveChatRoom(@PathVariable String roomId,
+                              @RequestParam String userId) {
+        return chatService.leaveChatRoom(roomId, userId);
+    }
 }
