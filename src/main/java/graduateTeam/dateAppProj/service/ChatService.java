@@ -4,10 +4,11 @@ import graduateTeam.dateAppProj.controller.chat.dto.ChatMessageRequestDto;
 import graduateTeam.dateAppProj.controller.chat.dto.ChatMessageResponseDto;
 import graduateTeam.dateAppProj.controller.chat.dto.ChatRoomResponseDto;
 import graduateTeam.dateAppProj.controller.chat.dto.RequestCreateChatRoomDto;
-import graduateTeam.dateAppProj.domain.ChatMessage;
-import graduateTeam.dateAppProj.domain.ChatRoom;
+import graduateTeam.dateAppProj.domain.chat.ChatMessage;
+import graduateTeam.dateAppProj.domain.chat.ChatRoom;
 import graduateTeam.dateAppProj.domain.Member;
-import graduateTeam.dateAppProj.domain.MemberChatRoom;
+import graduateTeam.dateAppProj.domain.chat.MemberChatRoom;
+import graduateTeam.dateAppProj.domain.chat.MessageType;
 import graduateTeam.dateAppProj.repository.ChatRepository;
 import graduateTeam.dateAppProj.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -74,6 +75,10 @@ public class ChatService {
     @Transactional
     public ChatMessageResponseDto sendMessage(ChatMessageRequestDto dto){
 
+        if (dto.getType() == MessageType.SYSTEM) {
+            return dto.toResponseDto("system");
+        }
+
         Member member = memberRepository.findByUserId(dto.getSenderId())
                 .orElseThrow(() -> {
                     log.warn("sendMessage : findByUserId");
@@ -82,7 +87,8 @@ public class ChatService {
 
         ChatRoom chatRoom = chatRepository.findById(UUID.fromString(dto.getRoomId()));
 
-        ChatMessage chatMessage = ChatMessage.createChatMessage(chatRoom, dto.getSenderId(), member.getUsername(), dto.getMessage());
+        ChatMessage chatMessage = ChatMessage.createChatMessage(chatRoom, dto.getSenderId(),
+                member.getUsername(), dto.getMessage(), dto.getType());
         chatRepository.saveChatMessage(chatMessage);
 
         return dto.toResponseDto(member.getUsername());

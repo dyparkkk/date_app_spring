@@ -1,4 +1,4 @@
-package graduateTeam.dateAppProj.domain;
+package graduateTeam.dateAppProj.domain.chat;
 
 import graduateTeam.dateAppProj.controller.chat.dto.RequestCreateChatRoomDto;
 import lombok.Builder;

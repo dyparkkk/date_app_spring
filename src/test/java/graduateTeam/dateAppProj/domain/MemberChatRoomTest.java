@@ -1,5 +1,6 @@
 package graduateTeam.dateAppProj.domain;
 
+import graduateTeam.dateAppProj.domain.chat.MemberChatRoom;
 import graduateTeam.dateAppProj.repository.MemberRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -10,8 +11,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest

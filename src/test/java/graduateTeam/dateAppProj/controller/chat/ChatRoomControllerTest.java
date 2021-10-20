@@ -1,7 +1,7 @@
 package graduateTeam.dateAppProj.controller.chat;
 
 import graduateTeam.dateAppProj.controller.chat.dto.RequestCreateChatRoomDto;
-import graduateTeam.dateAppProj.domain.Category;
+import graduateTeam.dateAppProj.domain.chat.Category;
 import graduateTeam.dateAppProj.domain.Member;
 import graduateTeam.dateAppProj.repository.ChatRepository;
 import graduateTeam.dateAppProj.repository.MemberRepository;

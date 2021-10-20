@@ -1,11 +1,9 @@
 package graduateTeam.dateAppProj.controller.chat.dto;
 
-import graduateTeam.dateAppProj.domain.Category;
-import graduateTeam.dateAppProj.domain.ChatRoom;
+import graduateTeam.dateAppProj.domain.chat.Category;
+import graduateTeam.dateAppProj.domain.chat.ChatRoom;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Getter
 @NoArgsConstructor

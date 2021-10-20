@@ -1,9 +1,9 @@
 package graduateTeam.dateAppProj.repository;
 
-import graduateTeam.dateAppProj.domain.ChatMessage;
-import graduateTeam.dateAppProj.domain.ChatRoom;
+import graduateTeam.dateAppProj.domain.chat.ChatMessage;
+import graduateTeam.dateAppProj.domain.chat.ChatRoom;
 import graduateTeam.dateAppProj.domain.Member;
-import graduateTeam.dateAppProj.domain.MemberChatRoom;
+import graduateTeam.dateAppProj.domain.chat.MemberChatRoom;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;

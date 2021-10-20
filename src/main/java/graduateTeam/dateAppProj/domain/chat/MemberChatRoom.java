@@ -1,5 +1,6 @@
-package graduateTeam.dateAppProj.domain;
+package graduateTeam.dateAppProj.domain.chat;
 
+import graduateTeam.dateAppProj.domain.Member;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

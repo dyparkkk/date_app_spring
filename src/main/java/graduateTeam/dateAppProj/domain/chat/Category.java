@@ -1,4 +1,4 @@
-package graduateTeam.dateAppProj.domain;
+package graduateTeam.dateAppProj.domain.chat;
 
 public enum Category {
     exercise,

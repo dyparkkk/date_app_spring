@@ -45,7 +45,6 @@ public class ChatRoomController {
 //    public List<ChatRoomResponseDto> searchChatRoom (@RequestParam String word,
 //                                                     @RequestParam Category category) {
 //
-//
 //    }
 
     @GetMapping("/leaveRoom/{roomId}")
