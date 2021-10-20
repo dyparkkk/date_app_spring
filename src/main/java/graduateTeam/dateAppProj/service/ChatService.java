@@ -1,9 +1,7 @@
 package graduateTeam.dateAppProj.service;
 
-import graduateTeam.dateAppProj.controller.chat.dto.ChatMessageRequestDto;
-import graduateTeam.dateAppProj.controller.chat.dto.ChatMessageResponseDto;
-import graduateTeam.dateAppProj.controller.chat.dto.ChatRoomResponseDto;
-import graduateTeam.dateAppProj.controller.chat.dto.RequestCreateChatRoomDto;
+import graduateTeam.dateAppProj.controller.chat.dto.*;
+import graduateTeam.dateAppProj.controller.dto.UserListInfoDto;
 import graduateTeam.dateAppProj.domain.chat.ChatMessage;
 import graduateTeam.dateAppProj.domain.chat.ChatRoom;
 import graduateTeam.dateAppProj.domain.Member;
@@ -115,6 +113,16 @@ public class ChatService {
             chatRepository.removeChatRoom(chatRoom);
         }
         return 1L;
+    }
+
+    @Transactional
+    public ChatRoomInfoResponseDto getChatRoomInfo(String roomId) {
+        ChatRoom chatRoom = chatRepository.findById(UUID.fromString(roomId));
+        List<UserListInfoDto> userList = chatRepository.findMemberChatRoomByChatRoom(chatRoom)
+                .stream().map(mc -> new UserListInfoDto().createDto(mc.getMember()))
+                .collect(Collectors.toList());
+
+        return new ChatRoomInfoResponseDto().createDto(chatRoom, userList);
     }
 
 }

@@ -60,4 +60,11 @@ public class ChatRepository {
         em.remove(chatRoom);
     }
 
+    public List<MemberChatRoom> findMemberChatRoomByChatRoom(ChatRoom chatRoom) {
+        return em.createQuery("select mc from MemberChatRoom mc" +
+                " where mc.chatRoom = :chatRoom", MemberChatRoom.class)
+                .setParameter("chatRoom", chatRoom)
+                .getResultList();
+    }
+
 }
