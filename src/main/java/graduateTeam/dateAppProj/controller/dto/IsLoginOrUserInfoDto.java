@@ -7,15 +7,17 @@ import lombok.Setter;
 
 @Getter @Setter
 @NoArgsConstructor
-public class IsLoginDto {
+public class IsLoginOrUserInfoDto {
     private String message;
     private String userId;
     private String userName;
+    private String roomId;
 
     @Builder
-    public IsLoginDto(String message, String userId, String userName) {
+    public IsLoginOrUserInfoDto(String message, String userId, String userName, String roomId) {
         this.message = message;
         this.userId = userId;
         this.userName = userName;
+        this.roomId = roomId;
     }
 }

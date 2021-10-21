@@ -1,16 +1,15 @@
 package graduateTeam.dateAppProj.controller;
 
-import graduateTeam.dateAppProj.controller.dto.IsLoginDto;
+import graduateTeam.dateAppProj.controller.dto.IsLoginOrUserInfoDto;
 import graduateTeam.dateAppProj.controller.dto.LoginInfoDto;
 import graduateTeam.dateAppProj.controller.dto.UserInfoDto;
 import graduateTeam.dateAppProj.domain.Member;
+import graduateTeam.dateAppProj.service.ChatService;
 import graduateTeam.dateAppProj.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
@@ -20,6 +19,7 @@ import java.util.List;
 public class MemberController {
 
     private final MemberService memberService;
+    private final ChatService chatService;
 
     @PostMapping("/signup")
     @ResponseBody
@@ -54,14 +54,18 @@ public class MemberController {
 
     @GetMapping("/hi")
     @ResponseBody
-    public IsLoginDto isLogin(@SessionAttribute(name = "user", required = false) Member loginMember) {
+    public IsLoginOrUserInfoDto isLoginAndUserInfo(@SessionAttribute(name = "user", required = false) Member loginMember) {
         String message;
-        IsLoginDto dto = new IsLoginDto();
+        IsLoginOrUserInfoDto dto = new IsLoginOrUserInfoDto();
         if(loginMember == null) message = "error : not login";
         else {
             message = "login success";
             dto.setUserId(loginMember.getUserId());
             dto.setUserName(loginMember.getUsername());
+            List<String> chatRoomList = chatService.FindChatRoomByMember(loginMember.getUserId());
+            if(chatRoomList.isEmpty() == false) {
+                dto.setRoomId(chatRoomList.get(0));
+            }
         }
         dto.setMessage(message);
         return dto;

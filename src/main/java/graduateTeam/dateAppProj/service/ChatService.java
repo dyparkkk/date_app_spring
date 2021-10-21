@@ -125,4 +125,24 @@ public class ChatService {
         return new ChatRoomInfoResponseDto().createDto(chatRoom, userList);
     }
 
+    @Transactional
+    public List<String> FindChatRoomByMember(String userId) {
+        /**
+         * 유저 정보로 유저가 들어가있는 방 찾기
+         */
+        Member member = memberRepository.findByUserId(userId)
+                .orElseThrow(() -> {
+                    log.warn("FindChatRoomByMember : findByUserId");
+                    throw new IllegalArgumentException("userId를 찾을수 없습니다. ");
+                });
+
+        List<String> roomIdList = chatRepository.findMemberChatRoomByMember(member)
+                .stream().map(mc -> mc.getChatRoom().getId().toString())
+                .collect(Collectors.toList());
+
+        return roomIdList;
+    }
+
+
+
 }

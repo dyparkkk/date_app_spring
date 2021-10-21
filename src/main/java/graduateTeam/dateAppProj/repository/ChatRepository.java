@@ -67,4 +67,11 @@ public class ChatRepository {
                 .getResultList();
     }
 
+    public List<MemberChatRoom> findMemberChatRoomByMember(Member member) {
+        return em.createQuery("select mc from MemberChatRoom mc" +
+                        " where mc.member = :member", MemberChatRoom.class)
+                .setParameter("member", member)
+                .getResultList();
+    }
+
 }

@@ -49,4 +49,5 @@ public class ChatRoomController {
     public ChatRoomInfoResponseDto chatRoomInfo(@PathVariable String roomId){
         return chatService.getChatRoomInfo(roomId);
     }
+
 }
