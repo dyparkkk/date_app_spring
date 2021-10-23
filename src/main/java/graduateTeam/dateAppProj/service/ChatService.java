@@ -142,7 +142,4 @@ public class ChatService {
 
         return roomIdList;
     }
-
-
-
 }

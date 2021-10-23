@@ -23,6 +23,7 @@ public class ChatRoom {
     private UUID id;
 
     private String name;
+    private String ownerId;
     private int userNumber;
 
     @OneToMany(mappedBy = "chatroom", cascade = {CascadeType.REMOVE})
@@ -41,11 +42,13 @@ public class ChatRoom {
     private double longitude;
 
     @Builder
-    public ChatRoom(String name, Category category, double latitude, double longitude){
+    public ChatRoom(String name, Category category, double latitude, double longitude,
+                    String ownerId){
         this.name = name;
         this.category = category;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.ownerId = ownerId;
         this.userNumber = 0;
     }
 
@@ -72,6 +75,7 @@ public class ChatRoom {
                 .category(dto.getCategory())
                 .latitude(dto.getLatitude())
                 .longitude(dto.getLongitude())
+                .ownerId(dto.getUserId())
                 .build();
         chatRoom.addMemberChatRoom(memberChatRoom);
         return chatRoom;

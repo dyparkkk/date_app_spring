@@ -16,21 +16,24 @@ public class ChatRoomInfoResponseDto {
     private double latitude;
     private double longitude;
     private Category category;
+    private String ownerId;
     private int userNumber;
 
     public ChatRoomInfoResponseDto(List<UserListInfoDto> userList, String name,
                                    double latitude, double longitude,
-                                   Category category, int userNumber) {
+                                   Category category, int userNumber, String ownerId) {
         this.userList = userList;
         this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;
         this.category = category;
         this.userNumber = userNumber;
+        this.ownerId = ownerId;
     }
 
     public ChatRoomInfoResponseDto createDto(ChatRoom chatRoom, List<UserListInfoDto> userList) {
         return new ChatRoomInfoResponseDto(userList, chatRoom.getName(), chatRoom.getLatitude(),
-                chatRoom.getLongitude(), chatRoom.getCategory(), chatRoom.getUserNumber());
+                chatRoom.getLongitude(), chatRoom.getCategory(), chatRoom.getUserNumber(),
+                chatRoom.getOwnerId());
     }
 }
