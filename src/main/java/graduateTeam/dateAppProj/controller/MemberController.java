@@ -1,17 +1,19 @@
 package graduateTeam.dateAppProj.controller;
 
 import graduateTeam.dateAppProj.controller.dto.IsLoginOrUserInfoDto;
-import graduateTeam.dateAppProj.controller.dto.LoginInfoDto;
+import graduateTeam.dateAppProj.controller.dto.LoginRequestDto;
 import graduateTeam.dateAppProj.controller.dto.UserInfoDto;
 import graduateTeam.dateAppProj.domain.Member;
-import graduateTeam.dateAppProj.service.ChatService;
+import graduateTeam.dateAppProj.service.ChatRoomService;
 import graduateTeam.dateAppProj.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -19,7 +21,7 @@ import java.util.List;
 public class MemberController {
 
     private final MemberService memberService;
-    private final ChatService chatService;
+    private final ChatRoomService chatRoomService;
 
     @PostMapping("/signup")
     @ResponseBody
@@ -35,22 +37,11 @@ public class MemberController {
 
     @PostMapping("/login")
     @ResponseBody
-    public UserInfoDto login(@RequestBody LoginInfoDto dto, HttpServletRequest req) {
+    public UserInfoDto login(@RequestBody LoginRequestDto dto, HttpServletRequest req) {
         return memberService.login(dto, req);
     }
 
-//    @GetMapping("/hi")
-//    public String hi(@SessionAttribute(name = "user", required = false) Member loginMember,
-//                     Model model){
-//        if(loginMember != null){
-//            model.addAttribute("userId", loginMember.getUserId());
-//        } else{
-//            model.addAttribute("userId", "guest");
-//        }
-//
-//
-//        return "index";
-//    }
+    // login 에 룸 아이디 추가
 
     @GetMapping("/hi")
     @ResponseBody
@@ -62,12 +53,27 @@ public class MemberController {
             message = "login success";
             dto.setUserId(loginMember.getUserId());
             dto.setUserName(loginMember.getUsername());
-            List<String> chatRoomList = chatService.FindChatRoomByMember(loginMember.getUserId());
+            List<String> chatRoomList = chatRoomService.FindChatRoomByMember(loginMember);
             if(chatRoomList.isEmpty() == false) {
                 dto.setRoomId(chatRoomList.get(0));
             }
         }
         dto.setMessage(message);
         return dto;
+    }
+
+    @GetMapping("/room")
+    @ResponseBody
+    public Map<String, String> findMembersChatRoom(@SessionAttribute(name = "user", required = false) Member loginMember) {
+        Map<String, String> response = new HashMap<>();
+        if(loginMember == null){
+            throw new IllegalStateException("세션 확인 필요");
+        }
+        List<String> chatRoomList = chatRoomService.FindChatRoomByMember(loginMember);
+        if(chatRoomList.isEmpty() == false) {
+            response.put("roomId", chatRoomList.get(0));
+        }
+
+        return response;
     }
 }

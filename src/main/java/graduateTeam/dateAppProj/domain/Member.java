@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter @NoArgsConstructor
@@ -27,6 +29,11 @@ public class Member {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @OneToMany(mappedBy = "member")
+    private List<VoteHistory> voteHistories = new ArrayList<>();
+
+
 
     public Member(String username, String userId, String userPwd) {
         this.username = username;

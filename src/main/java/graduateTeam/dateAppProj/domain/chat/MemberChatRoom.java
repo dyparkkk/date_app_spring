@@ -15,6 +15,8 @@ public class MemberChatRoom {
     @Column(name = "member_chatroom_id")
     private Long id;
 
+    private Boolean isVote;
+
     @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;
@@ -32,6 +34,12 @@ public class MemberChatRoom {
     public static MemberChatRoom createMemberChatRoom(Member member){
         MemberChatRoom memberChatRoom = new MemberChatRoom();
         memberChatRoom.member = member;
+        memberChatRoom.isVote = Boolean.FALSE;
         return memberChatRoom;
+    }
+
+    //== 비즈니스 로직 ==//
+    public void vote(){
+        isVote = Boolean.TRUE;
     }
 }

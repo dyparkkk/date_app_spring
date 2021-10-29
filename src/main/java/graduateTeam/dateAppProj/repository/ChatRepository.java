@@ -1,5 +1,7 @@
 package graduateTeam.dateAppProj.repository;
 
+import graduateTeam.dateAppProj.domain.Vote;
+import graduateTeam.dateAppProj.domain.VoteHistory;
 import graduateTeam.dateAppProj.domain.chat.ChatMessage;
 import graduateTeam.dateAppProj.domain.chat.ChatRoom;
 import graduateTeam.dateAppProj.domain.Member;
@@ -71,6 +73,19 @@ public class ChatRepository {
         return em.createQuery("select mc from MemberChatRoom mc" +
                         " where mc.member = :member", MemberChatRoom.class)
                 .setParameter("member", member)
+                .getResultList();
+    }
+
+    public void saveVote(Vote vote) {
+        em.persist(vote);
+    }
+
+    public void saveVoteHistory(VoteHistory voteHistory) {
+        em.persist(voteHistory);
+    }
+
+    public List<VoteHistory> allVoteHistory(){
+        return em.createQuery("select h from VoteHistory h", VoteHistory.class)
                 .getResultList();
     }
 

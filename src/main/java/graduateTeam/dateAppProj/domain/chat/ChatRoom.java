@@ -1,6 +1,8 @@
 package graduateTeam.dateAppProj.domain.chat;
 
 import graduateTeam.dateAppProj.controller.chat.dto.RequestCreateChatRoomDto;
+import graduateTeam.dateAppProj.domain.Vote;
+import graduateTeam.dateAppProj.domain.VoteState;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,6 +28,9 @@ public class ChatRoom {
     private String ownerId;
     private int userNumber;
 
+    @Embedded
+    private Vote vote;
+
     @OneToMany(mappedBy = "chatroom", cascade = {CascadeType.REMOVE})
     private List<ChatMessage> messages = new ArrayList<>();
 
@@ -41,22 +46,25 @@ public class ChatRoom {
     @Column(precision = 6)
     private double longitude;
 
+    //==생성 메서드==//
     @Builder
     public ChatRoom(String name, Category category, double latitude, double longitude,
-                    String ownerId){
+                    String ownerId, Vote vote){
         this.name = name;
         this.category = category;
         this.latitude = latitude;
         this.longitude = longitude;
         this.ownerId = ownerId;
         this.userNumber = 0;
+        this.vote = vote;
     }
 
     //== 연관관계 메서드==//
-    public void addMemberChatRoom(MemberChatRoom memberChatRoom){
+    public ChatRoom addMemberChatRoom(MemberChatRoom memberChatRoom){
         memberChatRooms.add(memberChatRoom);
         memberChatRoom.addChatRoom(this);
         userNumber += 1;
+        return this;
     }
 
     public void removeMemberChatRoom(MemberChatRoom memberChatRoom) {
@@ -68,18 +76,6 @@ public class ChatRoom {
         messages.add(chatMessage);
     }
 
-    //==생성 메서드==//
-    public static ChatRoom createChatRoom(RequestCreateChatRoomDto dto, MemberChatRoom memberChatRoom) {
-        ChatRoom chatRoom = ChatRoom.builder()
-                .name(dto.getName())
-                .category(dto.getCategory())
-                .latitude(dto.getLatitude())
-                .longitude(dto.getLongitude())
-                .ownerId(dto.getUserId())
-                .build();
-        chatRoom.addMemberChatRoom(memberChatRoom);
-        return chatRoom;
-    }
-
+    //== 비즈니스 로직==//
 
 }
