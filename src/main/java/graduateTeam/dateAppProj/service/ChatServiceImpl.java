@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -103,5 +104,14 @@ public class ChatServiceImpl implements ChatService {
                 });
         chatRoom.getVote().updateVote(VoteState.FINISH);
         return 1L;
+    }
+
+    @Transactional
+    @Override
+    public List<VoteHistoryAllDto> allHistory(){
+        return chatRepository.allVoteHistory()
+                .stream()
+                .map(VoteHistoryAllDto::new)
+                .collect(Collectors.toList());
     }
 }

@@ -1,9 +1,6 @@
 package graduateTeam.dateAppProj.controller.chat;
 
-import graduateTeam.dateAppProj.controller.chat.dto.ChatMessageRequestDto;
-import graduateTeam.dateAppProj.controller.chat.dto.ChatMessageResponseDto;
-import graduateTeam.dateAppProj.controller.chat.dto.UpdateVoteRequestDto;
-import graduateTeam.dateAppProj.controller.chat.dto.VoteInfoResponseDto;
+import graduateTeam.dateAppProj.controller.chat.dto.*;
 import graduateTeam.dateAppProj.domain.Member;
 import graduateTeam.dateAppProj.domain.VoteHistory;
 import graduateTeam.dateAppProj.repository.ChatRepository;
@@ -24,7 +21,6 @@ public class ChatController {
 
     private final SimpMessagingTemplate messagingTemplate;
     private final ChatService chatService;
-    private final ChatRepository chatRepository;
 
     @MessageMapping("/message") //  /pub/chat/message
     public void message(ChatMessageRequestDto messageDto) {
@@ -62,9 +58,8 @@ public class ChatController {
     }
 
     @GetMapping("/historys")
-    public List<VoteHistory> allHistorys() {
-        return chatRepository.allVoteHistory();
+    public List<VoteHistoryAllDto> allHistorys() {
+        return chatService.allHistory();
     }
-
 
 }

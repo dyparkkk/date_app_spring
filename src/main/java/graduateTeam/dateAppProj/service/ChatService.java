@@ -12,4 +12,5 @@ public interface ChatService {
     Long addVoteMember(String roomId, Member member);
     VoteInfoResponseDto voteInfo(String roomId);
     Long endVote(String roomId);
+    List<VoteHistoryAllDto> allHistory();
 }
