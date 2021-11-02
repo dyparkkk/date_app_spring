@@ -40,4 +40,14 @@ public class ChatMessageRequestDto {
                 .type(type)
                 .build();
     }
+
+    @Override
+    public String toString() {
+        return "ChatMessageRequestDto{" +
+                "roomId='" + roomId + '\'' +
+                ", senderId='" + senderId + '\'' +
+                ", message='" + message + '\'' +
+                ", type=" + type +
+                '}';
+    }
 }

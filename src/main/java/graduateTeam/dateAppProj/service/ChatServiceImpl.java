@@ -31,6 +31,7 @@ public class ChatServiceImpl implements ChatService {
     @Transactional
     @Override
     public ChatMessageResponseDto sendMessage(ChatMessageRequestDto dto){
+        log.info("ChatMessageRequestDto :" + dto.toString());
 
         if (dto.getType() == MessageType.SYSTEM) {
             return dto.toResponseDto("system");
@@ -48,7 +49,10 @@ public class ChatServiceImpl implements ChatService {
                 member.getUsername(), dto.getMessage(), dto.getType());
         chatRepository.saveChatMessage(chatMessage);
 
-        return dto.toResponseDto(member.getUsername());
+        ChatMessageResponseDto chatMessageResponseDto = dto.toResponseDto(member.getUsername());
+        log.info("chatMessageResponseDto: "+chatMessageResponseDto.toString());
+        return chatMessageResponseDto;
+
     }
 
     @Transactional
