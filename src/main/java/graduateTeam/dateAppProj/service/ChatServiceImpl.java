@@ -57,13 +57,10 @@ public class ChatServiceImpl implements ChatService {
 
     @Transactional
     @Override
-    public Long updateVote(String roomId, UpdateVoteRequestDto dto, Member member) {
+    public Long updateVote(String roomId, UpdateVoteRequestDto dto) {
         ChatRoom chatRoom = chatRepository.findById(UUID.fromString(roomId));
+        // if(member == owner ) ?
         chatRoom.getVote().updateVote(dto.getName(), dto.getState());
-
-        MemberChatRoom memberChatRoom = chatRepository.findMemberChatRoom(member, chatRoom).get();
-        memberChatRoom.vote();
-        chatRoom.getVote().addCount();
 
         return 1L;
     }

@@ -34,7 +34,7 @@ public class ChatController {
                              @RequestBody UpdateVoteRequestDto dto,
                              @SessionAttribute(name = "user") Member loginMember) {
 
-        chatService.updateVote(roomId, dto, loginMember);
+        chatService.updateVote(roomId, dto);
         return "success";
     }
 
