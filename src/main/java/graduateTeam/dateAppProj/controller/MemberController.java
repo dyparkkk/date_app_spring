@@ -80,8 +80,10 @@ public class MemberController {
 
     @GetMapping("/logout")
     @ResponseBody
-    public String logout(HttpSession session) {
+    public String logout(HttpSession session,
+                         @SessionAttribute(name = "user", required = false) Member loginMember) {
         session.invalidate();
-        return "logout";
+        if(loginMember == null) return "not login";
+        return "logout success";
     }
 }
