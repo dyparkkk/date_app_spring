@@ -22,6 +22,13 @@ public class ChatController {
     private final SimpMessagingTemplate messagingTemplate;
     private final ChatService chatService;
 
+    @MessageMapping("/test")
+    public void test(ChatMessageRequestDto dto){
+        log.info("message : test !!! ");
+        dto.setMessage("테스트 ~~ 입장 ");
+        messagingTemplate.convertAndSend("/sub/chat/room/" + dto.getRoomId(), dto);
+    }
+
     @MessageMapping("/message") //  /pub/chat/message
     public void message(ChatMessageRequestDto messageDto) {
         log.info("message : " + messageDto.getMessage());
@@ -55,11 +62,6 @@ public class ChatController {
     public String endVote(@PathVariable String roomId) {
         chatService.endVote(roomId);
         return "success";
-    }
-
-    @GetMapping("/historys")
-    public List<VoteHistoryAllDto> allHistorys() {
-        return chatService.allHistory();
     }
 
 }

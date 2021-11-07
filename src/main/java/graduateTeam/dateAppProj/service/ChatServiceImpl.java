@@ -1,16 +1,16 @@
 package graduateTeam.dateAppProj.service;
 
 import graduateTeam.dateAppProj.controller.chat.dto.*;
-import graduateTeam.dateAppProj.controller.dto.UserListInfoDto;
-import graduateTeam.dateAppProj.domain.Vote;
-import graduateTeam.dateAppProj.domain.VoteHistory;
 import graduateTeam.dateAppProj.domain.VoteState;
 import graduateTeam.dateAppProj.domain.chat.ChatMessage;
 import graduateTeam.dateAppProj.domain.chat.ChatRoom;
 import graduateTeam.dateAppProj.domain.Member;
 import graduateTeam.dateAppProj.domain.chat.MemberChatRoom;
 import graduateTeam.dateAppProj.domain.chat.MessageType;
+import graduateTeam.dateAppProj.domain.history.History;
+import graduateTeam.dateAppProj.domain.history.HistoryMember;
 import graduateTeam.dateAppProj.repository.ChatRepository;
+import graduateTeam.dateAppProj.repository.HistoryRepository;
 import graduateTeam.dateAppProj.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +27,7 @@ public class ChatServiceImpl implements ChatService {
 
     private final ChatRepository chatRepository;
     private final MemberRepository memberRepository;
+    private final HistoryRepository historyRepository;
 
     @Transactional
     @Override
@@ -91,28 +92,25 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public Long endVote(String roomId) {
         ChatRoom chatRoom = chatRepository.findById(UUID.fromString(roomId));
-        chatRepository.findMemberChatRoomByChatRoom(chatRoom)
+        History history = new History(chatRoom);
+        historyRepository.saveHistory(history);
+        List<MemberChatRoom> voteMC = chatRepository.findMemberChatRoomByChatRoom(chatRoom)
                 .stream()
-                .forEach(memberChatRoom -> {
-                    if(memberChatRoom.getIsVote() == Boolean.TRUE){
-                        VoteHistory vh = VoteHistory.builder()
-                                .name(chatRoom.getName())
-                                .member(memberChatRoom.getMember())
-                                .category(chatRoom.getCategory())
-                                .build();
-                        chatRepository.saveVoteHistory(vh);
-                    }
-                });
+                .filter(mc -> mc.getIsVote() == Boolean.TRUE)
+                .collect(Collectors.toList());
+
+        for(MemberChatRoom mc : voteMC){
+            HistoryMember hm = HistoryMember.builder()
+                    .history(history)
+                    .member(mc.getMember())
+                    .build();
+            historyRepository.saveHistoryMember(hm);
+            history.addHistoryMember(hm);
+            mc.getMember().addHistoryMember(hm);
+        }
+
         chatRoom.getVote().updateVote(VoteState.FINISH);
-        return 1L;
+        return history.getId();
     }
 
-    @Transactional
-    @Override
-    public List<VoteHistoryAllDto> allHistory(){
-        return chatRepository.allVoteHistory()
-                .stream()
-                .map(VoteHistoryAllDto::new)
-                .collect(Collectors.toList());
-    }
 }

@@ -1,11 +1,12 @@
 package graduateTeam.dateAppProj.domain;
 
 import graduateTeam.dateAppProj.controller.dto.UserInfoDto;
+import graduateTeam.dateAppProj.domain.history.HistoryMember;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,11 +28,14 @@ public class Member {
     @Column(nullable = false)
     private String userPwd;
 
+    @Column(nullable = false)
+    private BigDecimal score;
+
     @Enumerated(EnumType.STRING)
     private Role role;
 
     @OneToMany(mappedBy = "member")
-    private List<VoteHistory> voteHistories = new ArrayList<>();
+    private List<HistoryMember> historyMembers = new ArrayList<>();
 
 
 
@@ -39,10 +43,20 @@ public class Member {
         this.username = username;
         this.userId = userId;
         this.userPwd = userPwd;
+        this.score = new BigDecimal("3.00");
     }
 
     public static Member createMember(UserInfoDto dto){
         return new Member(dto.getUserName(), dto.getUserId(), dto.getUserPwd());
     }
 
+    //== 연관관계 메서드 ==//
+    public void addHistoryMember(HistoryMember historyMember) {
+        historyMembers.add(historyMember);
+    }
+
+    //== 비즈니스 로직 ==//
+    public void reviseScore(double a){
+
+    }
 }

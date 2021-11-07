@@ -28,15 +28,5 @@ public class ChatMessageResponseDto {
         this.type = type;
     }
 
-    @Override
-    public String toString() {
-        return "ChatMessageResponseDto{" +
-                "roomId='" + roomId + '\'' +
-                ", senderId='" + senderId + '\'' +
-                ", message='" + message + '\'' +
-                ", senderName='" + senderName + '\'' +
-                ", time=" + time +
-                ", type=" + type +
-                '}';
-    }
+
 }
