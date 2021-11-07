@@ -20,15 +20,16 @@ import java.util.List;
 public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
-    private final PasswordEncoder passwordEncoder;
+//    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     @Override
     public Long save(UserInfoDto dto){
         validateDuplicateUser(dto.getUserId());
 
-        String bPwd =  passwordEncoder.encode(dto.getUserPwd());
-        dto.setUserPwd(bPwd);
+//        String bPwd =  passwordEncoder.encode(dto.getUserPwd());
+//        dto.setUserPwd(bPwd);
+        dto.setUserPwd(dto.getUserPwd());
         Member member = Member.createMember(dto);
 
         return memberRepository.save(member);
@@ -63,9 +64,9 @@ public class MemberServiceImpl implements MemberService {
         Member findMember = memberRepository.findByUserId(userId)
                 .orElseThrow(() -> new IllegalArgumentException("아이디가 존재하지 않습니다. "));
 
-        if (!passwordEncoder.matches(userPwd, findMember.getUserPwd())) {
-            throw new IllegalArgumentException("비밀번호가 다릅니다. ");
-        }
+//        if (!passwordEncoder.matches(userPwd, findMember.getUserPwd())) {
+//            throw new IllegalArgumentException("비밀번호가 다릅니다. ");
+//        }
 
         return findMember;
     }

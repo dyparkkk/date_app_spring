@@ -20,21 +20,21 @@ class MemberRepositoryTest {
     @Autowired
     MemberRepository memberRepository;
 
-    @Test
-    @Transactional
-    void test_findByUserId() {
-        String userId = "user1";
-
-        Member member = new Member("testName", userId, "pwd");
-
-
-        //when
-        memberRepository.save(member);
-        Member findMember = memberRepository.findByUserId(userId).get();
-
-        //then
-        Assertions.assertThat(findMember.getId()).isEqualTo(member.getId());
-
-    }
+//    @Test
+//    @Transactional
+//    void test_findByUserId() {
+//        String userId = "user1";
+//
+//        Member member = new Member("testName", userId, "pwd");
+//
+//
+//        //when
+//        memberRepository.save(member);
+//        Member findMember = memberRepository.findByUserId(userId).get();
+//
+//        //then
+//        Assertions.assertThat(findMember.getId()).isEqualTo(member.getId());
+//
+//    }
 
 }
