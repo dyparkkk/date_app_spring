@@ -3,6 +3,7 @@ package graduateTeam.dateAppProj.controller.chat;
 import graduateTeam.dateAppProj.controller.chat.dto.*;
 import graduateTeam.dateAppProj.domain.Member;
 import graduateTeam.dateAppProj.domain.VoteHistory;
+import graduateTeam.dateAppProj.domain.chat.MessageType;
 import graduateTeam.dateAppProj.repository.ChatRepository;
 import graduateTeam.dateAppProj.service.ChatService;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,14 @@ public class ChatController {
 
     private final SimpMessagingTemplate messagingTemplate;
     private final ChatService chatService;
+
+    @GetMapping("hi")
+    public void test1(){
+        log.info("message : test1 2222");
+        ChatMessageRequestDto dto = new ChatMessageRequestDto("aa", "test@test.com", "루삘뽕", MessageType.USER);
+        messagingTemplate.convertAndSend("/sub", dto);
+
+    }
 
     @MessageMapping("/test")
     public void test(ChatMessageRequestDto dto){
