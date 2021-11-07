@@ -26,7 +26,7 @@ public class ChatController {
     public void test(ChatMessageRequestDto dto){
         log.info("message : test !!! ");
         dto.setMessage("테스트 ~~ 입장 ");
-        messagingTemplate.convertAndSend("/sub/chat/room/" + dto.getRoomId(), dto);
+        messagingTemplate.convertAndSend("/sub", dto);
     }
 
     @MessageMapping("/message") //  /pub/chat/message
