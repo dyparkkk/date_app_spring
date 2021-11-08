@@ -18,6 +18,7 @@ public class HistoryController {
 
     private final HistoryService historyService;
 
+    @GetMapping("/")
     public List<MyHistoryDto> allHistory(@SessionAttribute(name = "user", required = false) Member loginMember) {
         return historyService.allHistory(loginMember);
     }
