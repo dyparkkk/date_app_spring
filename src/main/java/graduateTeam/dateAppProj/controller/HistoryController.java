@@ -30,7 +30,7 @@ public class HistoryController {
         return historyService.historyInfo(loginMember, id);
     }
 
-    @PostMapping("/{Id}")
+    @PostMapping("/{id}")
     public String evaluationHistory(@SessionAttribute(name = "user", required = false) Member loginMember,
                                     @PathVariable String id,
                                     @RequestBody List<HistoryUserListDto> list) {
