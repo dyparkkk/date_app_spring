@@ -25,7 +25,7 @@ public class HistoryService {
         List<HistoryMember> list = historyRepository.findHistoryMemberByMember(member);
         ArrayList<MyHistoryDto> responseList = new ArrayList<>();
         for (HistoryMember hm : list) {
-            responseList.add(new MyHistoryDto(hm.getHistory()));
+            responseList.add(new MyHistoryDto(hm.getHistory(), hm));
         }
 
         return responseList;
