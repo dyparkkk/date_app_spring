@@ -22,10 +22,13 @@ public class HistoryService {
 
     @Transactional
     public List<MyHistoryDto> allHistory(Member member) {
-        return member.getHistoryMembers()
-                .stream()
-                .map(historyMember -> new MyHistoryDto(historyMember.getHistory()))
-                .collect(Collectors.toList());
+        List<HistoryMember> list = historyRepository.findHistoryMemberByMember(member);
+        ArrayList<MyHistoryDto> responseList = new ArrayList<>();
+        for (HistoryMember hm : list) {
+            responseList.add(new MyHistoryDto(hm.getHistory()));
+        }
+
+        return responseList;
     }
 
     @Transactional

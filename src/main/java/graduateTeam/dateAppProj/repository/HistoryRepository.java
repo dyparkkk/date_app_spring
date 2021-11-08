@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -26,6 +27,13 @@ public class HistoryRepository {
 
     public History findById(Long id) {
         return em.find(History.class, id);
+    }
+
+    public List<HistoryMember> findHistoryMemberByMember(Member member) {
+        return em.createQuery("select hm from HistoryMember hm" +
+                        " where hm.member = :member", HistoryMember.class)
+                .setParameter("member", member)
+                .getResultList();
     }
 
 }
