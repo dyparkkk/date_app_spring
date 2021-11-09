@@ -48,11 +48,13 @@ public class HistoryService {
     public void evaluationHistory(String id, List<HistoryUserListDto> list) {
         History history = historyRepository.findById(Long.valueOf(id));
         for(HistoryUserListDto dto : list){
-            HistoryMember historyMember = history.getHistoryMembers().stream()
+            List<HistoryMember> collect = history.getHistoryMembers().stream()
                     .filter(hm -> hm.getMember().getUserId().equals(dto.getUserId()))
-                    .collect(Collectors.toList())
-                    .get(0);
-            historyMember.addScore(dto.getScore());
+                    .collect(Collectors.toList());
+            if(!collect.isEmpty()){
+                collect.get(0).addScore(dto.getScore());
+            }
+
         }
     }
 }

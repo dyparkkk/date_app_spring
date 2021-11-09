@@ -33,8 +33,9 @@ public class HistoryController {
     @PostMapping("/{id}")
     public String evaluationHistory(@SessionAttribute(name = "user", required = false) Member loginMember,
                                     @PathVariable String id,
-                                    @RequestBody List<HistoryUserListDto> list) {
-        historyService.evaluationHistory(id, list);
+                                    @RequestBody HistoryUserListDto param) {
+
+        historyService.evaluationHistory(id, param.getMainList());
         return "평가완료";
     }
 }
