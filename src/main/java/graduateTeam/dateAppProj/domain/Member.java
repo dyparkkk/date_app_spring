@@ -56,7 +56,7 @@ public class Member {
     }
 
     //== 비즈니스 로직 ==//
-    public void reviseScore(double a){
-
+    public void setScore(BigDecimal score){
+        this.score = score;
     }
 }

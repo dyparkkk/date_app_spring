@@ -5,6 +5,7 @@ import graduateTeam.dateAppProj.domain.chat.ChatRoom;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -13,6 +14,7 @@ import java.math.RoundingMode;
 @Entity
 @Getter
 @NoArgsConstructor
+@Slf4j
 public class HistoryMember {
     @Id
     @GeneratedValue
@@ -39,12 +41,12 @@ public class HistoryMember {
     //== 비즈니스 로직 ==//
     public void addScore(double x) {
         /**
-         *     x /= 10
+         *     x = (x-3)/10
          *     score += x
          */
 
-        BigDecimal bigDecimal = new BigDecimal(x).setScale(2, RoundingMode.HALF_UP);
-//        bigDecimal.divide(BigDecimal.TEN, 2, RoundingMode.HALF_UP);
-        score.add(bigDecimal);
+        x = x - 3.0;
+        x /= 10.0;
+        score = score.add(new BigDecimal(x));
     }
 }

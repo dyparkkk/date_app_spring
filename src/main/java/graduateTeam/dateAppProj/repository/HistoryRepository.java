@@ -32,4 +32,5 @@ public class HistoryRepository {
                 .setParameter("member", member)
                 .getResultList();
     }
+
 }

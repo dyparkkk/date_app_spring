@@ -38,4 +38,5 @@ public class HistoryController {
         historyService.evaluationHistory(id, param.getMainList());
         return "평가완료";
     }
+
 }

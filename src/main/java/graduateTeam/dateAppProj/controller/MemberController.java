@@ -3,8 +3,10 @@ package graduateTeam.dateAppProj.controller;
 import graduateTeam.dateAppProj.controller.dto.IsLoginOrUserInfoDto;
 import graduateTeam.dateAppProj.controller.dto.LoginRequestDto;
 import graduateTeam.dateAppProj.controller.dto.UserInfoDto;
+import graduateTeam.dateAppProj.controller.dto.ViewUserScoreResponseDto;
 import graduateTeam.dateAppProj.domain.Member;
 import graduateTeam.dateAppProj.service.ChatRoomService;
+import graduateTeam.dateAppProj.service.HistoryService;
 import graduateTeam.dateAppProj.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -23,6 +25,7 @@ public class MemberController {
 
     private final MemberService memberService;
     private final ChatRoomService chatRoomService;
+    private final HistoryService historyService;
 
     @PostMapping("/signup")
     @ResponseBody
@@ -85,5 +88,19 @@ public class MemberController {
         session.invalidate();
         if(loginMember == null) return "not login";
         return "logout success";
+    }
+
+    @GetMapping("updateMyScore")
+    @ResponseBody
+    public String myScore(@SessionAttribute(name = "user", required = false) Member loginMember){
+        historyService.updateMyScore(loginMember);
+
+        return "업데이트 완료";
+    }
+
+    @GetMapping("viewUser/{userId}")
+    @ResponseBody
+    public ViewUserScoreResponseDto viewUserScore(@PathVariable String userId) {
+        return historyService.viewUserScore(userId);
     }
 }
