@@ -1,8 +1,6 @@
 package graduateTeam.dateAppProj.repository;
 
 import graduateTeam.dateAppProj.domain.Member;
-import graduateTeam.dateAppProj.domain.chat.ChatRoom;
-import graduateTeam.dateAppProj.domain.chat.MemberChatRoom;
 import graduateTeam.dateAppProj.domain.history.History;
 import graduateTeam.dateAppProj.domain.history.HistoryMember;
 import org.springframework.stereotype.Repository;
@@ -10,7 +8,6 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public class HistoryRepository {
@@ -35,5 +32,4 @@ public class HistoryRepository {
                 .setParameter("member", member)
                 .getResultList();
     }
-
 }

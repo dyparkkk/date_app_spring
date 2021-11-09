@@ -9,13 +9,15 @@ import graduateTeam.dateAppProj.service.ChatService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.HtmlUtils;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/chat")
+@Controller
 @RequiredArgsConstructor
 @Slf4j
 public class ChatController {
@@ -23,29 +25,22 @@ public class ChatController {
     private final SimpMessagingTemplate messagingTemplate;
     private final ChatService chatService;
 
-    @GetMapping("hi")
-    public void test1(){
-        log.info("message : test1 2222");
-        ChatMessageRequestDto dto = new ChatMessageRequestDto("aa", "test@test.com", "루삘뽕", MessageType.USER);
-        messagingTemplate.convertAndSend("/sub", dto);
-
-    }
-
-    @MessageMapping("/test")
-    public void test(ChatMessageRequestDto dto){
+    @MessageMapping("/chat/test") // /pub/chat/test
+    public void test(HelloMessageDto dto){
         log.info("message : test !!! ");
-        dto.setMessage("테스트 ~~ 입장 ");
-        messagingTemplate.convertAndSend("/sub", dto);
+        dto.setContent("테스트 ~~ 입장 " + dto.getName());
+        messagingTemplate.convertAndSend("/sub/greetings", dto);
     }
 
-    @MessageMapping("/message") //  /pub/chat/message
+    @MessageMapping(value = "/chat/message") //  /pub/chat/message  ??
     public void message(ChatMessageRequestDto messageDto) {
         log.info("message : " + messageDto.getMessage());
         ChatMessageResponseDto responseDto = chatService.sendMessage(messageDto);
         messagingTemplate.convertAndSend("/sub/chat/room/" + responseDto.getRoomId(), responseDto);
     }                           //    /sub/chat/room/roomId
 
-    @PostMapping("/createVote/{roomId}")
+    @PostMapping("/chat/createVote/{roomId}")
+    @ResponseBody
     public String updateVote(@PathVariable String roomId,
                              @RequestBody UpdateVoteRequestDto dto,
                              @SessionAttribute(name = "user") Member loginMember) {
@@ -54,20 +49,23 @@ public class ChatController {
         return "success";
     }
 
-    @PostMapping("/vote/{roomId}")
+    @PostMapping("/chat/vote/{roomId}")
+    @ResponseBody
     public String participateVote(@PathVariable String roomId,
                                 @SessionAttribute(name = "user") Member loginMember) {
         chatService.addVoteMember(roomId, loginMember);
         return "success";
     }
 
-    @GetMapping("/vote/{roomId}")
+    @GetMapping("/chat/vote/{roomId}")
+    @ResponseBody
     public VoteInfoResponseDto voteInfo(@PathVariable String roomId) {
         // 유저 정보
         return chatService.voteInfo(roomId);
     }
 
-    @PostMapping("/endVote/{roomId}")
+    @PostMapping("/chat/endVote/{roomId}")
+    @ResponseBody
     public String endVote(@PathVariable String roomId) {
         chatService.endVote(roomId);
         return "success";

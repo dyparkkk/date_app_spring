@@ -5,7 +5,6 @@ import graduateTeam.dateAppProj.controller.dto.LoginRequestDto;
 import graduateTeam.dateAppProj.controller.dto.UserInfoDto;
 import graduateTeam.dateAppProj.domain.Member;
 import graduateTeam.dateAppProj.repository.MemberRepository;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;

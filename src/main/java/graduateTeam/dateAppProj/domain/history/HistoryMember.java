@@ -44,8 +44,7 @@ public class HistoryMember {
          */
 
         BigDecimal bigDecimal = new BigDecimal(x).setScale(2, RoundingMode.HALF_UP);
-        bigDecimal.divide(BigDecimal.TEN, 2, RoundingMode.HALF_UP);
+//        bigDecimal.divide(BigDecimal.TEN, 2, RoundingMode.HALF_UP);
         score.add(bigDecimal);
     }
-
 }
