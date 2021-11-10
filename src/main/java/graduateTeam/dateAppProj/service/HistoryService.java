@@ -71,11 +71,12 @@ public class HistoryService {
         BigDecimal score = new BigDecimal("3.00");
         for (HistoryMember hm : hmList) {
             double tmp = hm.getScore().doubleValue();
-            tmp = (tmp-3.0)/10.0;
+            tmp = (tmp-3.0);
             score = score.add(new BigDecimal(tmp));
         }
-//        score.setScale(2, RoundingMode.HALF_UP);
-        member.setScore(score);
+        score = score.setScale(2, RoundingMode.HALF_UP);
+        memberRepository.findOne(member.getId()).setScore(score);
+
     }
 
     @Transactional

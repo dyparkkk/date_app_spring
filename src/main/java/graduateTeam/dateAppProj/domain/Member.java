@@ -4,6 +4,7 @@ import graduateTeam.dateAppProj.controller.dto.UserInfoDto;
 import graduateTeam.dateAppProj.domain.history.HistoryMember;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -12,6 +13,7 @@ import java.util.List;
 
 @Entity
 @Getter @NoArgsConstructor
+@Slf4j
 public class Member {
 
     @Id
