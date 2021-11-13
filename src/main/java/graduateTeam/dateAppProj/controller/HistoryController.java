@@ -35,7 +35,7 @@ public class HistoryController {
                                     @PathVariable String id,
                                     @RequestBody HistoryUserListDto param) {
 
-        historyService.evaluationHistory(id, param.getMainList());
+        historyService.evaluationHistory(loginMember.getId(), id, param.getMainList());
         return "평가완료";
     }
 
