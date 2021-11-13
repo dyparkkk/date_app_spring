@@ -55,10 +55,11 @@ public class HistoryService {
     @Transactional
     public void evaluationHistory(Long memberId, String id, List<HistoryUserListDto> list) {
         History history = historyRepository.findById(Long.valueOf(id));
+        Member member = memberRepository.findOne(memberId);
         for(HistoryUserListDto dto : list){
             for(HistoryMember hm : history.getHistoryMembers()){
                 if(hm.getMember().getUserId().equals(dto.getUserId()) &&
-                 !dto.getUserId().equals(memberId)){
+                 !dto.getUserId().equals(member.getUserId())){
                     log.info("addScore : "+ dto.getScore());
                     hm.addScore(dto.getScore());
                 }
