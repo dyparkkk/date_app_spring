@@ -2,18 +2,13 @@ package graduateTeam.dateAppProj.controller.chat;
 
 import graduateTeam.dateAppProj.controller.chat.dto.*;
 import graduateTeam.dateAppProj.domain.Member;
-import graduateTeam.dateAppProj.domain.VoteHistory;
-import graduateTeam.dateAppProj.domain.chat.MessageType;
-import graduateTeam.dateAppProj.repository.ChatRepository;
 import graduateTeam.dateAppProj.service.ChatService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.HtmlUtils;
 
 import java.util.List;
 

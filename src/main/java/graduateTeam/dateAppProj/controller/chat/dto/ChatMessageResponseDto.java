@@ -2,13 +2,13 @@ package graduateTeam.dateAppProj.controller.chat.dto;
 
 import graduateTeam.dateAppProj.domain.chat.MessageType;
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-@Getter
-@NoArgsConstructor
+@Data
 public class ChatMessageResponseDto {
     private String roomId;
     private String senderId;
