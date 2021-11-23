@@ -46,13 +46,13 @@ public class ChatRepository {
     }
 
     public Optional<MemberChatRoom> findMemberChatRoom(Member member, ChatRoom chatRoom) {
-        return Optional.ofNullable(
-                em.createQuery("select mc from MemberChatRoom mc" +
+        return em.createQuery("select mc from MemberChatRoom mc" +
                         " where mc.member = :member" +
-                                " and mc.chatRoom = :chatRoom", MemberChatRoom.class)
-                        .setParameter("member", member)
-                        .setParameter("chatRoom", chatRoom)
-                        .getResultList().stream().findFirst().orElse(null));
+                        " and mc.chatRoom = :chatRoom", MemberChatRoom.class)
+                .setParameter("member", member)
+                .setParameter("chatRoom", chatRoom)
+                .getResultList()
+                .stream().findAny();
     }
 
     public void removeMemberChatRoom(MemberChatRoom mc) {
