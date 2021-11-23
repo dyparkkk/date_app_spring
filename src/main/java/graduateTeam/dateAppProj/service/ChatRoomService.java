@@ -85,12 +85,14 @@ public class ChatRoomService {
                     throw  new IllegalArgumentException("userId를 찾을수 없습니다. ");
                 });
         ChatRoom chatRoom = chatRepository.findById(UUID.fromString(roomId));
+        log.info("leaveChatRoom - chatroom :  " + chatRoom.getId());
 
         MemberChatRoom memberChatRoom = chatRepository.findMemberChatRoom(member, chatRoom)
                 .orElseThrow(() -> {
                     log.warn("leaveChatRoom : findMemberChatRoom");
                     throw new IllegalArgumentException("memberChatRoom을 찾을수 없습니다. ");
                 });
+        log.info("leaveChatRoom - memberChatRoom: "+memberChatRoom.getId());
         chatRoom.removeMemberChatRoom(memberChatRoom);
         chatRepository.removeMemberChatRoom(memberChatRoom);
 
