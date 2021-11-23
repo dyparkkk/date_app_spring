@@ -1,6 +1,7 @@
 package graduateTeam.dateAppProj.controller.chat;
 
 import graduateTeam.dateAppProj.controller.chat.dto.*;
+import graduateTeam.dateAppProj.domain.chat.Category;
 import graduateTeam.dateAppProj.service.ChatRoomService;
 import graduateTeam.dateAppProj.service.ChatService;
 import lombok.RequiredArgsConstructor;
@@ -51,13 +52,13 @@ public class ChatRoomController {
     }
 
     @GetMapping("/search/category")
-    public List<ChatRoomResponseDto> searchCategory(@RequestBody Search.CategoryDto categoryDto){
-        return chatRoomService.findAllByCategory(categoryDto.getCategory());
+    public List<ChatRoomResponseDto> searchCategory(@RequestParam Category category){
+        return chatRoomService.findAllByCategory(category);
     }
 
     @GetMapping("/search/name")
-    public List<ChatRoomResponseDto> searchContaining(@RequestBody Search.ContainingDto containingDto){
-        return chatRoomService.findAllByContaining(containingDto.getName());
+    public List<ChatRoomResponseDto> searchContaining(@RequestParam String name){
+        return chatRoomService.findAllByContaining(name);
     }
 
 }
