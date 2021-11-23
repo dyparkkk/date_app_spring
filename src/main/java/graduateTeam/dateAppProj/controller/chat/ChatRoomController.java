@@ -1,13 +1,11 @@
 package graduateTeam.dateAppProj.controller.chat;
 
-import graduateTeam.dateAppProj.controller.chat.dto.ChatRoomIdResponseDto;
-import graduateTeam.dateAppProj.controller.chat.dto.ChatRoomInfoResponseDto;
-import graduateTeam.dateAppProj.controller.chat.dto.ChatRoomResponseDto;
-import graduateTeam.dateAppProj.controller.chat.dto.RequestCreateChatRoomDto;
+import graduateTeam.dateAppProj.controller.chat.dto.*;
 import graduateTeam.dateAppProj.service.ChatRoomService;
 import graduateTeam.dateAppProj.service.ChatService;
 import lombok.RequiredArgsConstructor;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,6 +13,7 @@ import java.util.List;
 @RequestMapping("/chat")
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 public class ChatRoomController {
 
     private final ChatRoomService chatRoomService;
@@ -49,6 +48,16 @@ public class ChatRoomController {
     @GetMapping("/roomInfo/{roomId}")
     public ChatRoomInfoResponseDto chatRoomInfo(@PathVariable String roomId){
         return chatRoomService.getChatRoomInfo(roomId);
+    }
+
+    @GetMapping("/search/category")
+    public List<ChatRoomResponseDto> searchCategory(@RequestBody Search.CategoryDto categoryDto){
+        return chatRoomService.findAllByCategory(categoryDto.getCategory());
+    }
+
+    @GetMapping("/search/name")
+    public List<ChatRoomResponseDto> searchContaining(@RequestBody Search.ContainingDto containingDto){
+        return chatRoomService.findAllByContaining(containingDto.getName());
     }
 
 }

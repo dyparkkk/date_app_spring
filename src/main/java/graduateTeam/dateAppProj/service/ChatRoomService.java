@@ -6,6 +6,7 @@ import graduateTeam.dateAppProj.controller.chat.dto.RequestCreateChatRoomDto;
 import graduateTeam.dateAppProj.controller.dto.UserListInfoDto;
 import graduateTeam.dateAppProj.domain.Member;
 import graduateTeam.dateAppProj.domain.Vote;
+import graduateTeam.dateAppProj.domain.chat.Category;
 import graduateTeam.dateAppProj.domain.chat.ChatRoom;
 import graduateTeam.dateAppProj.domain.chat.MemberChatRoom;
 import graduateTeam.dateAppProj.repository.ChatRepository;
@@ -120,5 +121,19 @@ public class ChatRoomService {
                 .collect(Collectors.toList());
 
         return roomIdList;
+    }
+
+    @Transactional
+    public List<ChatRoomResponseDto> findAllByCategory(Category category) {
+        return chatRepository.findAllByCategory(category).stream()
+                .map(ChatRoomResponseDto::new)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public List<ChatRoomResponseDto> findAllByContaining(String str) {
+        return chatRepository.findAllContaining(str).stream()
+                .map(ChatRoomResponseDto::new)
+                .collect(Collectors.toList());
     }
 }

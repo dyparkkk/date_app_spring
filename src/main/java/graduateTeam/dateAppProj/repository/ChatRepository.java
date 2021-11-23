@@ -2,6 +2,7 @@ package graduateTeam.dateAppProj.repository;
 
 import graduateTeam.dateAppProj.domain.Vote;
 import graduateTeam.dateAppProj.domain.VoteHistory;
+import graduateTeam.dateAppProj.domain.chat.Category;
 import graduateTeam.dateAppProj.domain.chat.ChatMessage;
 import graduateTeam.dateAppProj.domain.chat.ChatRoom;
 import graduateTeam.dateAppProj.domain.Member;
@@ -86,6 +87,20 @@ public class ChatRepository {
 
     public List<VoteHistory> allVoteHistory(){
         return em.createQuery("select h from VoteHistory h", VoteHistory.class)
+                .getResultList();
+    }
+
+    public List<ChatRoom> findAllByCategory(Category category){
+        return em.createQuery("select cr from ChatRoom cr"+
+                " where cr.category = :category", ChatRoom.class)
+                .setParameter("category", category)
+                .getResultList();
+    }
+
+    public List<ChatRoom> findAllContaining(String str){
+        return em.createQuery("select cr from ChatRoom cr" +
+                " where cr.name like :str", ChatRoom.class)
+                .setParameter("str", "%"+str+"%")
                 .getResultList();
     }
 
